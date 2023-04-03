@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Play Web3 One Operation!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+<script language="javascript" type="text/javascript" src="oneop_abi.js"></script>
+<script language="javascript" type="text/javascript" src="optoken_abi.js"></script>
+<script src = "gui.js" type = ""/></script>
+<script src = "game.js" type = ""/></script>
+<script src = "metamask.js" type = ""/></script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+</head>
+<body style="background-color:khaki"
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a id="menuGame" href="javascript:game.openPageGame();" class="w3-bar-item w3-button w3-padding-large w3-white w3-hover-white"> <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/icon.png" style="width:30px;height:30px;"></a>
+    <a id="menuFeat" href="javascript:game.openPageFeat();" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">  <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/assist.png" style="width:30px;height:30px;"></a>
+    <a id="btnConnect" href="javascript:metamask.connectMetamask();" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Connect</a>
+    <b id="gmPlayer" class="w3-bar-item w3-hide-small w3-padding-large w3-right"> </b>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a id="menuFeat1" href="javascript:game.openPageFeat();" class="w3-bar-item w3-button w3-padding-large">Feat</a>
+    <a id="btnConnect1" href="javascript:metamask.connectMetamask();" class="w3-bar-item w3-button w3-padding-large w3-rigt">Connect</a>
+    <b id="gmPlayer1" class="w3-bar-item w3-hide-small w3-padding-large w3-right"> </b>
+  </div>
+</div>
+
+<!-- Header 
+<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo">START PAGE</h1>
+  <p class="w3-xlarge">Template by w3.css</p>
+  <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button>
+</header>
+
+<header class="w3-red w3-center" style="padding-top:32px">
+    <h4 class="w3-margin">status</h4>
+</header>
+-->
+<div class="w3-center w3-red" style="padding-top:60px">
+  <p id="txGameStatus" class="w3-center">status</p>
+</div>
+<div class="w3-center w3-yellow w3-bottom" >
+  <b id="txStatus" class="w3-yellow">info</b>
+</div>
+
+<!-- First Grid -->
+<div id="gamePage" class="w3-row-padding w3-container ">
+    <div id="gmData" class="w3-half">
+      <h1 class="w3-center"></h1>
+        <div class="w3-bar w3-card w3-cyan w3-center w3-padding-large">
+            <b id="gmTime" class="w3-left"  style="width:20%" style="font-family:cambria"></b>
+            <strong hidden class=""w3-center w3-white" style="font-family:verdana" >Target</strong>
+            <input id="target" class="w3-button w3-white w3-ripple" type="button" value="PLAY" style="width:40%" style="font-family:bold, cambria" onclick = "game.checkGameRunning();">
+            <b id="gmTime1" class="w3-right"  style="width:20%" style="font-family:cambria"></b>
+        </div>
+        <div id="ln1" class="w3-bar w3-center w3-padding-small">
+            <input type = "button" class="w3-button w3-teal" style="width:20%" onclick = "game.setNum(this.id)" id = "num1" value = "1" />
+            <input type = "button"  class="w3-button w3-teal" style="width:20%" onclick = "game.setNum(this.id)" id = "num2" value = "2"/>
+            <input type = "button"  class="w3-button w3-teal" style="width:20%" onclick = "game.setNum(this.id)" id = "num3" value = "3"/>
+            <input type = "button"  class="w3-button w3-teal" style="width:20%" onclick = "game.setNum(this.id)" id = "num4" value = "4"/>
+        </div>
+        <div id="ln2" class="w3-bar w3-center w3-padding-small">
+            <input type = "button"  class="w3-button w3-teal" style="width:20%"  onclick = "game.setNum(this.id)" id = "num5" value = "5"/>
+            <input type = "button"  class="w3-button w3-teal" style="width:20%" onclick = "game.setNum(this.id)" id = "num6" value = "6"/>
+            <input type = "button"  class="w3-button w3-teal"style="width:20%" onclick = "game.setNum(this.id)" id = "num7"value = "7"/>
+            <input type = "button"  class="w3-button w3-teal"style="width:20%" onclick = "game.setNum(this.id)" id = "num8"value = "8"/>
+        </div>
+        <div id="ln2" class="w3-bar w3-center w3-padding-small">
+            <input type = "button"  class="w3-button w3-blue" style="width:10%" onclick = "game.setOp(this.id)" id = "3" value = "*" />
+            <input type = "button"  class="w3-button w3-blue" style="width:10%" onclick = "game.setOp(this.id)" id = "1" value = "+" />
+            <input type = "button"  class="w3-button w3-blue"style="width:10%" onclick = "game.setOp(this.id)" id = "2" value = "-" />
+            <input type = "button"  class="w3-button w3-blue"style="width:10%" onclick = "game.setOp(this.id)" id = "4" value = "/" />
+        </div>
+    </div>
+
+    <div class="w3-half">
+      <h1 class="w3-center"></h1>
+      <input type = "button" id="btnSend" class="w3-button w3-red w3-center w3-padding-large" style="width:100%" onclick = "game.sendResultOps()" value = "Send" hidden>
+        <!-- <h1 class="w3-center">Operations</h1> -->
+        <div id="gmTempOper" hidden> 
+          <div class="newop w3-bar w3-center w3-padding-small">
+            <input type="button" id="gmTempOperVal" value="" class="w3-button w3-teal" style="width:40%" disabled >
+            <input type="button" id="gmTempOperOp" value="" class="w3-button w3-blue" style="width:10%" disabled >
+            </div>
+        </div>
+        <div id="gmOpsW3"> </div>
+        <div class="w3-bar w3-center w3-padding-large"></div>
+    </div>
+</div>
+<div id="featPageStat" class="w3-full w3-center w3-container w3-topbar w3-bottombar w3-border-red w3-pale-red" hidden >
+  <div id="featData" class="">
+  </div>
+    <div class="w3-row-padding w3-center w3-padding-large" >
+      <div class="w3-half w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <h2 id="ncPlayed">0</h2>
+        <div class="w3-center w3-container">
+          <p>Games Played </p>
+        </div>
+      </div>
+      <div class="w3-half w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <h2 id="ncWon">0</h2>
+        <div class="w3-center w3-container">
+          <p>Games Won</p>
+        </div>
+      </div>
+    </div>
+</div>
+<div id="featPageToken" class="w3-full w3-center w3-container w3-bottombar w3-border-red w3-pale-red" hidden >
+  <div id="featData" class="">
+  </div>
+    <div class="w3-row-padding w3-center w3-padding-large" >
+      <div class="w3-half w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <h2 id="claimableOpToken">0</h2>
+        <div class="w3-center w3-container">
+          <p>GOP</p>
+        </div>
+        <div >
+          <input type="button" id="claimOpToken" onclick = "game.claimOpToken()" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+      </div>
+      <div class="w3-half w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <input type="number" id="opTokenQuantity" name="quantity" min="1" value = "1" class ="w3-center">
+        <div class="w3-center w3-container">
+          <p id="gopPrice"></p>
+        </div>
+        <div >
+          <input type="button" id="buyOpToken" onclick = "game.buyOpToken()" value="Buy" class="w3-button w3-teal" style="width:40%" >
+        </div>
+        <div class= "w3-margin-top" >
+          <input type="button" id="currentOpToken" value="Balance" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div id="featPage1" class="w3-full w3-center w3-container w3-bottombar w3-border-red w3-pale-red" hidden>
+  <div id="featData" class="">
+  </div>
+    <div class="w3-row-padding w3-center w3-padding-large" >
+      <div id="divMerit0" class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/1.png" alt="Win 1" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Win one game </p>
+        </div>
+        <div id="divMeritCB0" hidden >
+          <input type="button" id="claimMerit0" onclick = "game.claimMerit(0)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit0" onclick = "game.buyMerit(0)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw0" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit0" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    
+      <div class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/hithard.png" alt="Win 10" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Win 10 games</p>
+        </div>
+        <div id="divMeritCB1" hidden>
+          <input type="button" id="claimMerit1" onclick = "game.claimMerit(1)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit1" onclick = "game.buyMerit(1)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw1" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit1" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    
+    
+      <div class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/genius8all.png" alt="Genius" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Genius</p>
+        </div>
+        <div id="divMeritCB2" hidden>
+          <input type="button" id="claimMerit2" onclick = "game.claimMerit(2)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit2" onclick = "game.buyMerit(2)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw2" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit2" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    </div>
+</div>
+<div id="featPage2" class="w3-full w3-center w3-container w3-bottombar w3-border-red w3-pale-red w3-margin-bottom" hidden>
+  <div id="featData" class="">
+  </div>
+    <div class="w3-row-padding w3-center w3-padding-large" >
+      <div class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/777_fiddle.png" alt="Win 777" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Target 777</p>
+        </div>
+        <div id="divMeritCB3" hidden>
+          <input type="button" id="claimMerit3" onclick = "game.claimMerit(3)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit3" onclick = "game.buyMerit(3)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw3" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit3" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    
+      <div class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/prof.png" alt="Prof" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Professor</p>
+        </div>
+        <div id="divMeritCB4" hidden>
+          <input type="button" id="claimMerit4" onclick = "game.claimMerit(4)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit4" onclick = "game.buyMerit(4)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw4" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit4" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    
+      <div class="w3-third w3-center w3-hover-opacity w3-grayscale w3-margin-bottom">
+        <img src="https://bafybeidomraxkoj2l6htwrbgiybltifmw3f4ukuwdkugpmymgorqhh3vf4.ipfs.dweb.link/33_needle.png" alt="Lucky Target" style="width:80%;margin-bottom:-9px">
+        <div class="w3-center w3-container">
+          <p>Lucky Target</p>
+        </div>
+        <div id="divMeritCB5" hidden>
+          <input type="button" id="claimMerit5" onclick = "game.claimMerit(5)" value="Claim" class="w3-button w3-teal" style="width:40%" disabled >
+          <input type="button" id="buyMerit5" onclick = "game.buyMerit(5)" value="Buy" class="w3-button w3-teal" style="width:40%" disabled >
+        </div>
+        <div id="divMeritOw5" hidden class= "w3-margin-top" >
+          <input type="button" id="ownedMerit5" value="Owned" class="w3-button w3-green" style="width:100%" disabled >
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Second Grid 
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+      <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
+    </div>
+
+    <div class="w3-twothird">
+      <h1>Lorem Ipsum</h1>
+      <h5 class="w3-padding-32">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
+
+      <p class="w3-text-grey">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+  </div>
+</div>
+
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
+</div>
+-->
+<!-- Footer 
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+  <div class="w3-xlarge w3-padding-32">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+ </div>
+ <p hidden >Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer> -->
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+window.onload= metamask.onLoad ();
+</script>
+
+</body>
+</html>
