@@ -14,6 +14,9 @@ Get BTT test tokens: https://testfaucet.bt.io/#/
 
 Watch demo: https://youtu.be/lV6J75223rI
 
+# Whitepaper
+https://github.com/tausparagus/oponegame/blob/main/docs/whitepaper.pdf
+
 # How to build:
 Clone repository
 "npm install" to install dependencies
